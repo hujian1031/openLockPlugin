@@ -12,20 +12,6 @@ class OpenLock {
   static Stream<String> get scanResult =>
       _scanResultListenerStreamController.stream;
 
-  //连接失败流
-  static StreamController<String> _connectFailListenerStreamController =
-      new StreamController.broadcast();
-
-  static Stream<String> get connectResult =>
-      _connectFailListenerStreamController.stream;
-
-  //设备关闭
-  static StreamController<bool> _deviceCloseListenerStreamController =
-      new StreamController.broadcast();
-
-  static Stream<bool> get deviceClose =>
-      _deviceCloseListenerStreamController.stream;
-
   //java调flutter方法处理器
   static Future<dynamic> handler(MethodCall call) {
     String method = call.method;
@@ -33,17 +19,6 @@ class OpenLock {
       case "scanListener":
         {
           _scanResultListenerStreamController.add(call.arguments);
-          break;
-        }
-      case "connectFailListener":
-        {
-          print("connectFailListener输出的信息了");
-          _connectFailListenerStreamController.add(call.arguments);
-          break;
-        }
-      case "deviceClose":
-        {
-          _deviceCloseListenerStreamController.add(call.arguments);
           break;
         }
       default:

@@ -292,14 +292,12 @@ public class OpenLockPlugin implements MethodCallHandler {
         @Override
         public void deviceClose(String s, String s1) {
             Log.e(TAG, "关闭设备:" + s + "|" + s1);
-            channel.invokeMethod("deviceClose",  true);
         }
 
         //连接失败监听
         @Override
         public void connectFailListener(int i, String s) {
             Log.e(TAG, "连接失败监听:" + i + "|" + s);
-//            channel.invokeMethod("connectFailListener",  s + "|");
         }
 
         //扫描监听

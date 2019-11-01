@@ -57,8 +57,8 @@ class _MyAppState extends State<MyApp> {
                 sleep(Duration(milliseconds: 100));
               }
               print("连接成功!");
-//                  await OpenLock.setAdmin();
-//                  await OpenLock.setTime();
+//                  await OpenLock.setAdmin("0000000228","2019-11-01 10:04:00");
+//                  await OpenLock.setTime("0000000228","2019-11-01 10:04:00");
 //              OpenLock.modifyPassowrd("0000000228", "112233");
 //                  OpenLock.openDoor(
 //                      "0000000228",
@@ -70,9 +70,6 @@ class _MyAppState extends State<MyApp> {
 //                      "00:00",
 //                      "23:59");
               OpenLock.queryLockDetails("0000000228");
-              OpenLock.deviceClose.listen((v) {
-                print("设备断开${v}");
-              });
             },
             child: Text('初始化'),
           ),

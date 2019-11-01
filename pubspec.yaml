@@ -1,8 +1,8 @@
 name: open_lock
 description: A new Flutter project.
 version: 0.0.1
-author:
-homepage:
+author: 648561277@qq.com
+homepage: https://github.com/hujian1031/openLockPlugin.git
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
