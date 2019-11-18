@@ -33,7 +33,7 @@ class OpenLock {
     return await _channel.invokeMethod('init');
   }
 
-  ////蓝牙打开状态
+  //蓝牙打开状态
   static Future<bool> isBluetoothOpen() async {
     return await _channel.invokeMethod('isBluetoothOpen');
   }

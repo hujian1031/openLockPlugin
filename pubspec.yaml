@@ -1,7 +1,7 @@
 name: open_lock
-description: A new Flutter project.
+description: 调用智能锁SDK
 version: 0.0.1
-author: 648561277@qq.com
+author: HuJian <648561277@qq.com>
 homepage: https://github.com/hujian1031/openLockPlugin.git
 
 environment:

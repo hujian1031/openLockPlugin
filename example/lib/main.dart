@@ -47,11 +47,12 @@ class _MyAppState extends State<MyApp> {
 //                  OpenLock.scanResult.listen((v) {
 //                    print('结果:${v}');
 //                  });
-              OpenLock.connect('D0:CF:5E:A8:3B:3E');
+//              OpenLock.connect('D0:CF:5E:A8:3B:3E');
+              OpenLock.connect('00:0D:6F:4C:D8:D4');
               await OpenLock.isConnect().then((value) {
                 print("连接:${value}");
               });
-
+//
               while (await OpenLock.isConnect() == false) {
                 print("未连接成功");
                 sleep(Duration(milliseconds: 100));
@@ -60,16 +61,16 @@ class _MyAppState extends State<MyApp> {
 //                  await OpenLock.setAdmin("0000000228","2019-11-01 10:04:00");
 //                  await OpenLock.setTime("0000000228","2019-11-01 10:04:00");
 //              OpenLock.modifyPassowrd("0000000228", "112233");
-//                  OpenLock.openDoor(
-//                      "0000000228",
-//                      "2019-11-01 10:04:00",
-//                      "2019-10-01 00:00:00",
-//                      "2019-12-31 18:40:00",
-//                      "00:00",
-//                      "23:59",
-//                      "00:00",
-//                      "23:59");
-              OpenLock.queryLockDetails("0000000228");
+                  OpenLock.openDoor(
+                      "0000000228",
+                      "2019-11-18 11:02:00",
+                      "2019-11-18 11:02:00",
+                      "2019-11-18 11:02:00",
+                      "00:00",
+                      "23:59",
+                      "00:00",
+                      "23:59");
+//              OpenLock.queryLockDetails("0000000228");
             },
             child: Text('初始化'),
           ),
