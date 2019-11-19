@@ -24,7 +24,9 @@ import com.smartlockbluetoothlib.service.OperationLock;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * OpenLockPlugin
@@ -280,6 +282,14 @@ public class OpenLockPlugin implements MethodCallHandler {
         @Override
         public void connectListener(String s, String s1) {
             Log.e(TAG, "监听连接:" + s + "|" + s1);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    HashMap connectState  = new HashMap();
+                    connectState.put("connectState","success");
+                    channel.invokeMethod("connectState",connectState);
+                }
+            });
         }
 
         //断开监听
@@ -292,25 +302,53 @@ public class OpenLockPlugin implements MethodCallHandler {
         @Override
         public void deviceClose(String s, String s1) {
             Log.e(TAG, "关闭设备:" + s + "|" + s1);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    HashMap connectState  = new HashMap();
+                    connectState.put("connectState","close");
+                    channel.invokeMethod("connectState",connectState);
+                }
+            });
         }
 
         //连接失败监听
         @Override
         public void connectFailListener(int i, String s) {
             Log.e(TAG, "连接失败监听:" + i + "|" + s);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    HashMap connectState  = new HashMap();
+                    connectState.put("connectState","connectFail");
+                    channel.invokeMethod("connectState",connectState);
+                }
+            });
         }
 
         //扫描监听
         @Override
         public void leScanListener(String s, String s1) {
             Log.e(TAG, "扫描到设备:" + s + "|" + s1);
-            channel.invokeMethod("scanListener", s + "|" + s1);
+            HashMap<String,String> scanResult = new HashMap<String,String>();
+            scanResult.put("deviceMac",s);
+            scanResult.put("deviceName",s1);
+            channel.invokeMethod("scanListener", scanResult);
         }
 
         //发送命令状态
         @Override
-        public void onSendCmdState(int i, boolean b) {
+        public void onSendCmdState(final int i, final boolean b) {
             Log.e(TAG, "发送命令状态:" + i + "" + b);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    HashMap sendCmdState = new HashMap();
+                    sendCmdState.put("sendCmdCode",i);
+                    sendCmdState.put("sendCmdState",b);
+                    channel.invokeMethod("sendCmdState",sendCmdState);
+                }
+            });
         }
 
         //未知错误
@@ -333,8 +371,15 @@ public class OpenLockPlugin implements MethodCallHandler {
 
         //解锁
         @Override
-        public void onUnlock(int i) {
+        public void onUnlock(final int i) {
             Log.e(TAG, "解锁:" + i);
+            activity.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    channel.invokeMethod("onUnlockState",i);
+                }
+            });
+
         }
 
         //设置动态密码

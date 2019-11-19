@@ -16,6 +16,6 @@ void main() {
   });
 
   test('getPlatformVersion', () async {
-    expect(await OpenLock.platformVersion, '42');
+//    expect(await OpenLock.init());
   });
 }

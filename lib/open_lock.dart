@@ -5,12 +5,38 @@ import 'package:flutter/services.dart';
 class OpenLock {
   static const MethodChannel _channel = const MethodChannel('open_lock');
 
-  //扫描设备流
-  static StreamController<String> _scanResultListenerStreamController =
+  //扫描设备
+  static StreamController<Map> _scanResultListenerStreamController =
       new StreamController.broadcast();
 
-  static Stream<String> get scanResult =>
+  static Stream<Map> get scanResult =>
       _scanResultListenerStreamController.stream;
+
+  //发送命令状态
+  static StreamController<Map> _sendCmdStateStreamController =
+      new StreamController.broadcast();
+
+  static Stream<Map> get sendCmdState => _sendCmdStateStreamController.stream;
+
+  //设备连接状态
+  static StreamController<Map> _connectStateStreamController =
+      new StreamController.broadcast();
+
+  static Stream<Map> get connectState => _connectStateStreamController.stream;
+
+  //设备连接失败
+  static StreamController<Map> _connectFailStreamController =
+      new StreamController.broadcast();
+
+  static Stream<Map> get connectFail => _connectFailStreamController.stream;
+
+  //开锁
+  static StreamController<int> _onUnlockStateStreamController =
+  new StreamController.broadcast();
+
+  static Stream<int> get onUnlockState => _onUnlockStateStreamController.stream;
+
+
 
   //java调flutter方法处理器
   static Future<dynamic> handler(MethodCall call) {
@@ -21,6 +47,25 @@ class OpenLock {
           _scanResultListenerStreamController.add(call.arguments);
           break;
         }
+      case "sendCmdState":
+        {
+          _sendCmdStateStreamController.add(call.arguments);
+          break;
+        }
+      case "connectState":
+        {
+          _connectStateStreamController.add(call.arguments);
+          break;
+        }
+      case "connectFail":
+        {
+          _connectFailStreamController.add(call.arguments);
+          break;
+        }
+      case "onUnlockState":{
+        _onUnlockStateStreamController.add(call.arguments);
+        break;
+      }
       default:
         print("没有找到方法:${method}");
     }

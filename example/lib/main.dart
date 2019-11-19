@@ -16,8 +16,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    super.initState();
     initPlatformState();
+    super.initState();
   }
 
   Future<void> initPlatformState() async {
@@ -42,35 +42,37 @@ class _MyAppState extends State<MyApp> {
                 print('蓝牙未打开,开启蓝牙');
                 await OpenLock.openBluetooth();
               }
-//                  print('开始扫描');
-//                  OpenLock.startLeScan();
-//                  OpenLock.scanResult.listen((v) {
-//                    print('结果:${v}');
-//                  });
-//              OpenLock.connect('D0:CF:5E:A8:3B:3E');
-              OpenLock.connect('00:0D:6F:4C:D8:D4');
-              await OpenLock.isConnect().then((value) {
-                print("连接:${value}");
-              });
-//
-              while (await OpenLock.isConnect() == false) {
-                print("未连接成功");
-                sleep(Duration(milliseconds: 100));
-              }
-              print("连接成功!");
-//                  await OpenLock.setAdmin("0000000228","2019-11-01 10:04:00");
-//                  await OpenLock.setTime("0000000228","2019-11-01 10:04:00");
-//              OpenLock.modifyPassowrd("0000000228", "112233");
+//              print('开始扫描');
+//              OpenLock.startLeScan();
+//              OpenLock.scanResult.listen((v) {
+//                print('结果:${v}');
+//              });
+              OpenLock.connectState.listen((connectState) {
+                print("连接状态:$connectState");
+
+                if(connectState['connectState']=='success'){
+                  print("连接成功!");
+                  OpenLock.sendCmdState.listen((v) {
+                    print("开锁状态：$v");
+                  });
+                  OpenLock.onUnlockState.listen((v){
+                    print("开锁状态：$v");
+                  });
                   OpenLock.openDoor(
                       "0000000228",
-                      "2019-11-18 11:02:00",
-                      "2019-11-18 11:02:00",
-                      "2019-11-18 11:02:00",
+                      "2019-11-19 10:27:00",
+                      "2019-11-01 00:00:00",
+                      "2019-12-31 00:00:00",
                       "00:00",
                       "23:59",
                       "00:00",
                       "23:59");
-//              OpenLock.queryLockDetails("0000000228");
+                }
+
+
+              });
+              OpenLock.connect('D0:CF:5E:A8:3B:3E');
+
             },
             child: Text('初始化'),
           ),
