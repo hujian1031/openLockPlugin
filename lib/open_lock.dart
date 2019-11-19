@@ -24,12 +24,6 @@ class OpenLock {
 
   static Stream<Map> get connectState => _connectStateStreamController.stream;
 
-  //设备连接失败
-  static StreamController<Map> _connectFailStreamController =
-      new StreamController.broadcast();
-
-  static Stream<Map> get connectFail => _connectFailStreamController.stream;
-
   //开锁
   static StreamController<int> _onUnlockStateStreamController =
   new StreamController.broadcast();
@@ -57,11 +51,6 @@ class OpenLock {
           _connectStateStreamController.add(call.arguments);
           break;
         }
-      case "connectFail":
-        {
-          _connectFailStreamController.add(call.arguments);
-          break;
-        }
       case "onUnlockState":{
         _onUnlockStateStreamController.add(call.arguments);
         break;
@@ -77,6 +66,12 @@ class OpenLock {
     _channel.setMethodCallHandler(handler); //注意这里需要设置一下监听函数
     return await _channel.invokeMethod('init');
   }
+
+  static close()async{
+    _onUnlockStateStreamController.close();
+    _sendCmdStateStreamController.close();
+    _scanResultListenerStreamController.close();
+}
 
   //蓝牙打开状态
   static Future<bool> isBluetoothOpen() async {
